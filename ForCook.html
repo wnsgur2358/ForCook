@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cooking Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .recipe {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .recipe img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cooking Information</h1>
+    <div id="results"></div>
+    <script>
+        const xhr = new XMLHttpRequest();
+        const url = 'http://apis.data.go.kr/1390802/AgriFood/FdFoodCkryImage/getKoreanFoodFdFoodCkryImageList'; /*URL*/
+        let queryParams = '?' + encodeURIComponent('serviceKey') + '='+'U5XjUkRdLkTvDoRBbGDXhNq2cfj9mYqdaVfAKRjU%2BXGCA1pVpwIBgfqozq1royc8IkwyiLfEhI1gei2j8LbMNQ%3D%3D'; /*Service Key*/
+        queryParams += '&' + encodeURIComponent('service_Type') + '=' + encodeURIComponent('xml'); /**/
+        queryParams += '&' + encodeURIComponent('Page_No') + '=' + encodeURIComponent('1'); /**/
+        queryParams += '&' + encodeURIComponent('Page_Size') + '=' + encodeURIComponent('20'); /**/
+        queryParams += '&' + encodeURIComponent('food_Name') + '=' + encodeURIComponent('밥'); /**/
+        queryParams += '&' + encodeURIComponent('ckry_Name') + '=' + encodeURIComponent('조리'); /**/
+        xhr.open('GET', url + queryParams);
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                alert('Status: '+this.status+'\nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'\nBody: '+this.responseText);
+            }
+        };
+
+        function displayResults(response) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(response, "text/xml");
+        const items = xmlDoc.getElementsByTagName('item');
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = '';
+
+        for (let i = 0; i < items.length; i++) {
+            const foodName = items[i].getElementsByTagName('food_Name')[0].textContent;
+            const ckryName = items[i].getElementsByTagName('ckry_Name')[0].textContent;
+            const imageUrl = items[i].getElementsByTagName('image_Url')[0].textContent;
+
+            const recipeDiv = document.createElement('div');
+            recipeDiv.classList.add('recipe');
+
+            const recipeTitle = document.createElement('h2');
+            recipeTitle.textContent = `${foodName} - ${ckryName}`;
+
+            const recipeImage = document.createElement('img');
+            recipeImage.src = imageUrl;
+
+            recipeDiv.appendChild(recipeTitle);
+            recipeDiv.appendChild(recipeImage);
+
+            resultsDiv.appendChild(recipeDiv);
+        }
+    }
+    
+        xhr.send('');
+    </script>
+</body>
+</html>
+
+
+
+
+
