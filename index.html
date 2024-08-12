@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음식 정보 조회</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            color: #333;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .result {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+        h3 {
+           color: royalblue;
+        }
+        img {
+            width: 300px;  /* 이미지 너비를 300px로 고정 */
+            height: 200px; /* 이미지 높이를 200px로 고정 */
+            object-fit: cover;  /* 비율에 맞춰 조정 */
+            margin-top: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>음식 정보 조회</h2>
+    <input type="text" id="food-name" placeholder="음식 이름을 입력하세요">
+    <button onclick="getFoodInfo()">조회하기</button>
+    <div class="result" id="result"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+
+
